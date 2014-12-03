@@ -62,13 +62,13 @@ function findCartItem(cartItems,barcode) {
 }
 
 function getCartItemsText(cartItems) {
-  var number = getNumber(cartItems);
+  var promotioncount = getPromotioncount(cartItems);
   var cartItemText = '';
   for(var i = 0; i < cartItems.length; i++){
     cartItemText += '名称：' + cartItems[i].item.name +
                     '，数量：' + cartItems[i].count + cartItems[i].item.unit +
                     '，单价：' + (cartItems[i].item.price).toFixed(2) + '(元)' +
-                    '，小计：' + (cartItems[i].item.price * (cartItems[i].count -number[i])).toFixed(2) +'(元)\n';
+                    '，小计：' + (cartItems[i].item.price * (cartItems[i].count -promotioncount[i])).toFixed(2) +'(元)\n';
   }
   return cartItemText;
 }
@@ -96,27 +96,27 @@ function getSummaryText(cartItems,sum,prioromotions) {
   return summaryText;
 }
 
-function getNumber(cartItems) {
+function getPromotioncount(cartItems) {
   var promitions = loadPromotions();
-  var number = [];
+  var promotioncount = [];
   for(var i = 0; i < cartItems.length; i++) {
     for(var j = 0; j < promitions[0].barcodes.length; j++) {
       if(cartItems[i].item.barcode === promitions[0].barcodes[j]) {
-        number.push(0)
+        promotioncount.push(0)
       } else
         {
-          number.push(Math.floor(cartItems[i].count/3))
+          promotioncount.push(Math.floor(cartItems[i].count/3))
         }
     }
   }
-  return number;
+  return promotioncount;
 }
 
 function getSum(cartItems) {
   var sum = 0 ;
-  var number = getNumber(cartItems);
+  var promotioncount = getPromotioncount(cartItems);
   for(var i = 0; i < cartItems.length; i++) {
-    sum += cartItems[i].item.price * (cartItems[i].count -number[i]);
+    sum += cartItems[i].item.price * (cartItems[i].count -promotioncount[i]);
   }
   return sum;
 }
