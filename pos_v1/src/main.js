@@ -27,7 +27,6 @@ function getCartItems(tags) {
 }
 
 function getInventoryText(cartItems) {
-  // var promitionnew = getPromitionnew(cartItems);
   var total = getTotal (cartItems);
   var prioromotions = getPrioromotions(cartItems);
   var inventoryText = '';
@@ -99,7 +98,7 @@ function findPromotion(cartItem, promotions) {
 
     if(cartItem.item.barcode === promotions[0].barcodes[j]) {
       promotionText += '名称：' + cartItem.item.name +
-      '，数量：' + Math.floor(cartItem.count/3) + cartItem.item.unit + '\n';
+                       '，数量：' + Math.floor(cartItem.count/3) + cartItem.item.unit + '\n';
     }
   }
   return promotionText;
@@ -117,26 +116,25 @@ function getSummaryText(cartItems,total,promotions) {
 }
 
 function getPromotioncount(cartItems) {
-
   var promotions = loadPromotions();
   var promotioncount = [];
 
   for(var i = 0; i < cartItems.length; i++) {
-
-    for(var j = 0; j < promotions[0].barcodes.length; j++) {
-
-      if(cartItems[i].item.barcode === promotions[0].barcodes[j]) {
-        promotioncount.push(0)
-      } else
-        {
-          promotioncount.push(Math.floor(cartItems[i].count/3))
-        }
-    }
+    findPromotioncount(promotions[0], cartItems[i], promotioncount);
   }
   return promotioncount;
 }
 
+function findPromotioncount(promotion, cartItem, promotioncount) {
+  for(var j = 0; j < promotion.barcodes.length; j++) {
 
+    if(cartItem.item.barcode === promotion.barcodes[j]) {
+      promotioncount.push(0)
+    } else {
+      promotioncount.push(Math.floor(cartItem.count/3))
+    }
+  }
+}
 
 function getTotal(cartItems) {
 
@@ -157,15 +155,3 @@ function getPrioromotions(cartItems) {
   }
   return promotions;
 }
-
-// function getPromitionnew(cartItems){
-//   var promitions = loadPromotions();
-//   var bool = false;
-//   for(var i = 0; i < cartItems.length; i++) {
-//     for(var j = 0; j < promitions[0].barcodes.length; j++) {
-//       if(cartItems[i].item.barcode === promitions[0].barcodes[j])
-//         bool = true;
-//       }
-//     }
-//     return bool;
-// }
