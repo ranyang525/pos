@@ -67,11 +67,13 @@ function getCartItemsText(cartItems) {
   var cartItemText = '';
 
   for(var i = 0; i < cartItems.length; i++){
+    var cartItem = cartItems[i];
+    var item = cartItem.item;
 
-    cartItemText += '名称：' + cartItems[i].item.name +
-                    '，数量：' + cartItems[i].count + cartItems[i].item.unit +
-                    '，单价：' + (cartItems[i].item.price).toFixed(2) + '(元)' +
-                    '，小计：' + (cartItems[i].item.price * (cartItems[i].count -promotioncount[i])).toFixed(2) +'(元)\n';
+    cartItemText += '名称：' + item.name +
+                    '，数量：' + cartItem.count +item.unit +
+                    '，单价：' + item.price.toFixed(2) + '(元)' +
+                    '，小计：' + (item.price * (cartItem.count -promotioncount[i])).toFixed(2) +'(元)\n';
 
   }
   return cartItemText;
@@ -138,7 +140,7 @@ function getSum(cartItems) {
 }
 
 function getPrioromotions(cartItems,sum) {
-  
+
   var promitions = 0 ;
   for(var i = 0; i < cartItems.length; i++) {
     promitions += cartItems[i].item.price * cartItems[i].count;
