@@ -62,22 +62,30 @@ function findCartItem(cartItems,barcode) {
 }
 
 function getCartItemsText(cartItems) {
+
   var promotioncount = getPromotioncount(cartItems);
   var cartItemText = '';
+
   for(var i = 0; i < cartItems.length; i++){
+
     cartItemText += '名称：' + cartItems[i].item.name +
                     '，数量：' + cartItems[i].count + cartItems[i].item.unit +
                     '，单价：' + (cartItems[i].item.price).toFixed(2) + '(元)' +
                     '，小计：' + (cartItems[i].item.price * (cartItems[i].count -promotioncount[i])).toFixed(2) +'(元)\n';
+
   }
   return cartItemText;
 }
 
 function getPromotionText(cartItems) {
+
   var promitions = loadPromotions();
   var promotionText = '';
+
   for(var i = 0; i < cartItems.length; i++) {
+
     for(var j = 0; j < promitions[0].barcodes.length; j++) {
+
       if(cartItems[i].item.barcode === promitions[0].barcodes[j]) {
         promotionText += '名称：' + cartItems[i].item.name +
                          '，数量：' + Math.floor(cartItems[i].count/3) + cartItems[i].item.unit + '\n';
@@ -88,7 +96,9 @@ function getPromotionText(cartItems) {
 }
 
 function getSummaryText(cartItems,sum,prioromotions) {
+
   var summaryText = '';
+
   for(var i = 0; i < cartItems.length; i++) {
     summaryText = '总计：' + sum.toFixed(2) + '(元)\n' +
                   '节省：' + (prioromotions - sum).toFixed(2) + '(元)\n';
@@ -97,10 +107,14 @@ function getSummaryText(cartItems,sum,prioromotions) {
 }
 
 function getPromotioncount(cartItems) {
+
   var promitions = loadPromotions();
   var promotioncount = [];
+
   for(var i = 0; i < cartItems.length; i++) {
+
     for(var j = 0; j < promitions[0].barcodes.length; j++) {
+
       if(cartItems[i].item.barcode === promitions[0].barcodes[j]) {
         promotioncount.push(0)
       } else
@@ -113,8 +127,10 @@ function getPromotioncount(cartItems) {
 }
 
 function getSum(cartItems) {
+
   var sum = 0 ;
   var promotioncount = getPromotioncount(cartItems);
+
   for(var i = 0; i < cartItems.length; i++) {
     sum += cartItems[i].item.price * (cartItems[i].count -promotioncount[i]);
   }
@@ -122,29 +138,10 @@ function getSum(cartItems) {
 }
 
 function getPrioromotions(cartItems,sum) {
+  
   var promitions = 0 ;
   for(var i = 0; i < cartItems.length; i++) {
     promitions += cartItems[i].item.price * cartItems[i].count;
   }
   return promitions;
 }
-
-//
-// function getgetPromotionCount(){
-//   var promitions = loadPromotions();
-//   var promotionText = '';
-//   for(var i = 0; i < cartItems.length; i++) {
-//     for(var j = 0; j < promitions[0].barcodes.length; j++) {
-//
-//     }
-//   }
-// }
-
-
-
-
-
-
-
-
-// cartItems[i].price.toFixed(2) * (cartItems[i].count-Math.floor(cartItems[i].count/3))
