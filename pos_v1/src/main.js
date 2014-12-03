@@ -27,12 +27,12 @@ function getCartItems(tags) {
 }
 
 function getInventoryText(cartItems) {
-  var sum = getSum (cartItems);
-  var prioromotions = getPrioromotions(cartItems,sum);
+  var total = getTotal (cartItems);
+  var prioromotions = getPrioromotions(cartItems);
   var inventoryText = '';
   var cartItemText = getCartItemsText(cartItems)
   var promotionText = getPromotionText(cartItems);
-  var summaryText = getSummaryText(cartItems,sum,prioromotions);
+  var summaryText = getSummaryText(cartItems,total,prioromotions);
   var text =
   '***<没钱赚商店>购物清单***\n' + cartItemText +
   '----------------------\n' + '挥泪赠送商品：\n' +promotionText +
@@ -98,13 +98,13 @@ function getPromotionText(cartItems) {
   return promotionText;
 }
 
-function getSummaryText(cartItems,sum,prioromotions) {
+function getSummaryText(cartItems,total,prioromotions) {
 
   var summaryText = '';
 
   for(var i = 0; i < cartItems.length; i++) {
-    summaryText = '总计：' + sum.toFixed(2) + '(元)\n' +
-                  '节省：' + (prioromotions - sum).toFixed(2) + '(元)\n';
+    summaryText = '总计：' + total.toFixed(2) + '(元)\n' +
+                  '节省：' + (prioromotions - total).toFixed(2) + '(元)\n';
   }
   return summaryText;
 }
@@ -129,18 +129,18 @@ function getPromotioncount(cartItems) {
   return promotioncount;
 }
 
-function getSum(cartItems) {
+function getTotal(cartItems) {
 
-  var sum = 0 ;
+  var total = 0 ;
   var promotioncount = getPromotioncount(cartItems);
 
   for(var i = 0; i < cartItems.length; i++) {
-    sum += cartItems[i].item.price * (cartItems[i].count -promotioncount[i]);
+    total += cartItems[i].item.price * (cartItems[i].count -promotioncount[i]);
   }
-  return sum;
+  return total;
 }
 
-function getPrioromotions(cartItems,sum) {
+function getPrioromotions(cartItems) {
 
   var promitions = 0 ;
   for(var i = 0; i < cartItems.length; i++) {
