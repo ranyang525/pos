@@ -27,6 +27,7 @@ function getCartItems(tags) {
 }
 
 function getInventoryText(cartItems) {
+  // var promitionnew = getPromitionnew(cartItems);
   var total = getTotal (cartItems);
   var prioromotions = getPrioromotions(cartItems);
   var inventoryText = '';
@@ -69,7 +70,7 @@ function getCartItemsText(cartItems) {
   for(var i = 0; i < cartItems.length; i++){
     var cartItem = cartItems[i];
     var item = cartItem.item;
-    var actual = cartItem.count -promotioncount[i];
+    var actual = cartItem.count - promotioncount[i];
 
     cartItemText += '名称：' + item.name +
                     '，数量：' + cartItem.count +item.unit +
@@ -82,17 +83,23 @@ function getCartItemsText(cartItems) {
 
 function getPromotionText(cartItems) {
 
-  var promitions = loadPromotions();
+  var promotions = loadPromotions();
   var promotionText = '';
 
   for(var i = 0; i < cartItems.length; i++) {
+    promotionText += findPromotion(cartItems[i], promotions);
 
-    for(var j = 0; j < promitions[0].barcodes.length; j++) {
+  }
+  return promotionText;
+}
 
-      if(cartItems[i].item.barcode === promitions[0].barcodes[j]) {
-        promotionText += '名称：' + cartItems[i].item.name +
-                         '，数量：' + Math.floor(cartItems[i].count/3) + cartItems[i].item.unit + '\n';
-      }
+function findPromotion(cartItem, promotions) {
+  var promotionText = '';
+  for(var j = 0; j < promotions[0].barcodes.length; j++) {
+
+    if(cartItem.item.barcode === promotions[0].barcodes[j]) {
+      promotionText += '名称：' + cartItem.item.name +
+      '，数量：' + Math.floor(cartItem.count/3) + cartItem.item.unit + '\n';
     }
   }
   return promotionText;
@@ -111,14 +118,14 @@ function getSummaryText(cartItems,total,promotions) {
 
 function getPromotioncount(cartItems) {
 
-  var promitions = loadPromotions();
+  var promotions = loadPromotions();
   var promotioncount = [];
 
   for(var i = 0; i < cartItems.length; i++) {
 
-    for(var j = 0; j < promitions[0].barcodes.length; j++) {
+    for(var j = 0; j < promotions[0].barcodes.length; j++) {
 
-      if(cartItems[i].item.barcode === promitions[0].barcodes[j]) {
+      if(cartItems[i].item.barcode === promotions[0].barcodes[j]) {
         promotioncount.push(0)
       } else
         {
@@ -128,6 +135,8 @@ function getPromotioncount(cartItems) {
   }
   return promotioncount;
 }
+
+
 
 function getTotal(cartItems) {
 
@@ -149,4 +158,14 @@ function getPrioromotions(cartItems) {
   return promotions;
 }
 
-// function getpromition
+// function getPromitionnew(cartItems){
+//   var promitions = loadPromotions();
+//   var bool = false;
+//   for(var i = 0; i < cartItems.length; i++) {
+//     for(var j = 0; j < promitions[0].barcodes.length; j++) {
+//       if(cartItems[i].item.barcode === promitions[0].barcodes[j])
+//         bool = true;
+//       }
+//     }
+//     return bool;
+// }
