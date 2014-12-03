@@ -69,11 +69,12 @@ function getCartItemsText(cartItems) {
   for(var i = 0; i < cartItems.length; i++){
     var cartItem = cartItems[i];
     var item = cartItem.item;
+    var actual = cartItem.count -promotioncount[i];
 
     cartItemText += '名称：' + item.name +
                     '，数量：' + cartItem.count +item.unit +
                     '，单价：' + item.price.toFixed(2) + '(元)' +
-                    '，小计：' + (item.price * (cartItem.count -promotioncount[i])).toFixed(2) +'(元)\n';
+                    '，小计：' + (item.price * actual).toFixed(2) +'(元)\n';
 
   }
   return cartItemText;
