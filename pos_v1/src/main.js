@@ -14,8 +14,12 @@ function getCartItems(tags) {
     if (tagArray[1]) {
       count = parseFloat(tagArray[1]);
     }
-    var item = findItem(items, barcode);
-    var cartItem = findCartItem(cartItems,barcode);
+    var item = _.find(items,{barcode : barcode});
+    // var item = findItem(items, barcode);
+    var cartItem = _.find(cartItems,function(cartItem){
+      return cartItem.item.barcode === barcode;
+    });
+    // var cartItem = findCartItem(cartItems,barcode);
     if(cartItem) {
       cartItem.count += count;
     }
@@ -26,11 +30,31 @@ function getCartItems(tags) {
   return cartItems;
 }
 
+// function findItem(items,barcode) {
+//   var item;
+//   for(var i = 0; i < items.length; i++) {
+//     if(items[i].barcode === barcode){
+//       item = items[i];
+//     }
+//   }
+//   return item;
+// }
+
+// function findCartItem(cartItems,barcode) {
+//   var cartItem;
+//   for(var i = 0; i < cartItems.length; i++) {
+//     if(cartItems[i].item.barcode === barcode) {
+//       cartItem = cartItems[i];
+//     }
+//   }
+//   return cartItem;
+// }
+
 function getInventoryText(cartItems) {
+  var inventoryText = '';
   var total = getTotal (cartItems);
   var prioromotions = getPrioromotions(cartItems);
-  var inventoryText = '';
-  var cartItemText = getCartItemsText(cartItems)
+  var cartItemText = getCartItemsText(cartItems);
   var promotionText = getPromotionText(cartItems);
   var summaryText = getSummaryText(cartItems,total,prioromotions);
   var text =
@@ -39,26 +63,6 @@ function getInventoryText(cartItems) {
   '----------------------\n' + summaryText +
   '**********************';
   return text;
-}
-
-function findItem(items,barcode) {
-  var item;
-  for(var i = 0; i < items.length; i++) {
-    if(items[i].barcode === barcode){
-      item = items[i];
-    }
-  }
-  return item;
-}
-
-function findCartItem(cartItems,barcode) {
-  var cartItem;
-  for(var i = 0; i < cartItems.length; i++) {
-    if(cartItems[i].item.barcode === barcode) {
-      cartItem = cartItems[i];
-    }
-  }
-  return cartItem;
 }
 
 function getCartItemsText(cartItems) {
@@ -129,9 +133,9 @@ function findPromotioncount(promotion, cartItem, promotioncount) {
   for(var j = 0; j < promotion.barcodes.length; j++) {
 
     if(cartItem.item.barcode === promotion.barcodes[j]) {
-      promotioncount.push(0)
+      promotioncount.push(0);
     } else {
-      promotioncount.push(Math.floor(cartItem.count/3))
+      promotioncount.push(Math.floor(cartItem.count/3));
     }
   }
 }
