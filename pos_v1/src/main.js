@@ -70,17 +70,18 @@ function getCartItemsText(cartItems) {
   var promotioncount = getPromotioncount(cartItems);
   var cartItemText = '';
 
-  for(var i = 0; i < cartItems.length; i++){
-    var cartItem = cartItems[i];
+  _.forEach(cartItems,function(cartItem, index) {
+  //for(var i = 0; i < cartItems.length; i++){
+    //var cartItem = cartItems[i];
     var item = cartItem.item;
-    var actual = cartItem.count - promotioncount[i];
+    var actual = cartItem.count - promotioncount[index];
 
     cartItemText += '名称：' + item.name +
                     '，数量：' + cartItem.count +item.unit +
                     '，单价：' + item.price.toFixed(2) + '(元)' +
                     '，小计：' + (item.price * actual).toFixed(2) +'(元)\n';
 
-  }
+  });
   return cartItemText;
 }
 
