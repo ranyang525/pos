@@ -53,15 +53,15 @@ function getCartItems(tags) {
 function getInventoryText(cartItems) {
   var inventoryText = '';
   var total = getTotal (cartItems);
-  var prioromotions = getPrioromotions(cartItems);
+  var promotions = getpromotions(cartItems);
   var cartItemText = getCartItemsText(cartItems);
   var promotionText = getPromotionText(cartItems);
-  var summaryText = getSummaryText(cartItems,total,prioromotions);
+  var summaryText = getSummaryText(cartItems,total,promotions);
   var text =
-  '***<没钱赚商店>购物清单***\n' + cartItemText +
-  '----------------------\n' + '挥泪赠送商品：\n' +promotionText +
-  '----------------------\n' + summaryText +
-  '**********************';
+            '***<没钱赚商店>购物清单***\n' + cartItemText +
+            '----------------------\n' + '挥泪赠送商品：\n' +promotionText +
+            '----------------------\n' + summaryText +
+            '**********************';
   return text;
 }
 
@@ -152,7 +152,7 @@ function getTotal(cartItems) {
   return total;
 }
 
-function getPrioromotions(cartItems) {
+function getpromotions(cartItems) {
 
   var promotions = 0 ;
   for(var i = 0; i < cartItems.length; i++) {
