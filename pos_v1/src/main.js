@@ -1,14 +1,14 @@
-function printInventory(tags) {
-  var cartItems = getCartItems(tags);
+function printInventory(a) {
+  var cartItems = getCartItems(a);
   var inventoryText = getInventoryText(cartItems);
   console.log(inventoryText);
 }
 
-function getCartItems(tags) {
+function getCartItems(a) {
   var cartItems = [];
   var items = loadAllItems();
-  for (var i = 0; i < tags.length; i++) {
-    var tagArray = tags[i].split('-');
+  for (var i = 0; i < a.length; i++) {
+    var tagArray = a[i].split('-');
     var barcode = tagArray[0];
     var count = 1;
     if (tagArray[1]) {
