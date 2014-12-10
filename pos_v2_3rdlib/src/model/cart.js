@@ -1,8 +1,8 @@
-function Cart() {
+function CartItem() {
   this.cartItems = [];
 }
 
-Cart.prototype.setcart = function(tag) {
+CartItem.prototype.setcartItems = function(tag) {
   var cartItems = this.cartItems;
   var items = loadAllItems();
   for(var i = 0; i < tag.length; i++) {
@@ -24,6 +24,6 @@ Cart.prototype.setcart = function(tag) {
   }
 }
 
-Cart.prototype.getcart = function(tag) {
+CartItem.prototype.getcartItems = function() {
   return this.cartItems;
 }
