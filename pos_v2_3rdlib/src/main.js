@@ -1,7 +1,7 @@
 function printInventory(tags) {
-  var mycart = new Cart();
-  mycart.getcart(tags);
-  
+  var cart = new Cart();
+  cart.setcart(tags);
+  console.log(cart.getcart());
 }
 
-console.log(inventoryText);
+// console.log(inventoryText);
