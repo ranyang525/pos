@@ -1,6 +1,12 @@
 function printInventory(tags) {
-  var cart = new CartItem();
-  cart.setcartItems(tags);
+  
+  var scanner = new Scanner();
+  var cart = new Cart();
+
+  _.forEach(tags, function(tag) {
+    cart.addCartItem(scanner.setscanner(tag));
+  });
+
   var inventory = new Inventory(cart);
   console.log(inventory.toString());
 }

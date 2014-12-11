@@ -1,35 +1,24 @@
-function CartItem() {
+function Cart() {
   this.cartItems = [];
 }
 
-CartItem.prototype.setcartItems = function(tag) {
+Cart.prototype.addCartItem = function(oneCartItem) {
   var cartItems = this.cartItems;
-  var items = loadAllItems();
-  for(var i = 0; i < tag.length; i++) {
-    var tagArray = tag[i].split('-');
-    var barcode = tagArray[0];
-    var count = 1;
-    if(tagArray[1]) {
-      count = parseFloat(tagArray[1]);
-    }
-    var item = _.find(items,{barcode : barcode});
-    var cartItem = _.find(cartItems,function(cartItem){
-      return cartItem.item.barcode === barcode;
-    });
-    if(cartItem) {
-      cartItem.count += count;
-    } else {
-      cartItems.push({item:item , count:count});
-    }
+  var cartItem = _.find(cartItems, function(cartItem) {
+    return cartItem.item.barcode === oneCartItem.item.barcode;
+  });
+  if (cartItem) {
+    cartItem.count += oneCartItem.count;
+  } else {
+    cartItems.push(oneCartItem);
   }
 };
 
-CartItem.prototype.getcartItems = function() {
+Cart.prototype.getCartItems = function() {
   return this.cartItems;
 };
 
-
-CartItem.prototype.getPromotionText = function() {
+Cart.prototype.getPromotionText = function() {
 
   var promotions = loadPromotions();
   var promotionText = '';
@@ -53,7 +42,7 @@ function findPromotion(cartItem, promotions) {
   return promotionText;
 }
 
-CartItem.prototype.getCartItemsText = function() {
+Cart.prototype.getCartItemsText = function() {
 
   var promotioncount = getPromotioncount(this.cartItems);
   var cartItemText = '';
@@ -94,7 +83,7 @@ function findPromotioncount(promotion, cartItem, promotioncount) {
 }
 
 
-CartItem.prototype.getSummaryText = function() {
+Cart.prototype.getSummaryText = function() {
 
   var summaryText = '';
 
@@ -105,7 +94,7 @@ CartItem.prototype.getSummaryText = function() {
   return summaryText;
 };
 
-CartItem.prototype.getTotal = function() {
+Cart.prototype.getTotal = function() {
 
   var total = 0 ;
   var promotioncount = getPromotioncount(this.cartItems);
@@ -116,7 +105,7 @@ CartItem.prototype.getTotal = function() {
   return total;
 };
 
-CartItem.prototype.getpromotions = function() {
+Cart.prototype.getpromotions = function() {
 
   var promotions = 0 ;
   for(var i = 0; i < this.cartItems.length; i++) {
