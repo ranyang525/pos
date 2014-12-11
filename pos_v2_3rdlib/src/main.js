@@ -1,8 +1,10 @@
 function printInventory(tags) {
   var cart = new CartItem();
   cart.setcartItems(tags);
-  var inventoryText = getInventoryText(cart.getcartItems());
-  console.log(inventoryText);
+  // var inventoryText = getInventoryText(cart.getcartItems());
+  // console.log(inventoryText);
+  var inventory = new Inventory(cart);
+  console.log(inventory.toString());
 }
 
 function getInventoryText(cartItems) {
@@ -51,29 +53,29 @@ function getCartItemsText(cartItems) {
   return cartItemText;
 }
 
-function getPromotionText(cartItems) {
-
-  var promotions = loadPromotions();
-  var promotionText = '';
-
-  for(var i = 0; i < cartItems.length; i++) {
-    promotionText += findPromotion(cartItems[i], promotions);
-
-  }
-  return promotionText;
-}
-
-function findPromotion(cartItem, promotions) {
-  var promotionText = '';
-  for(var j = 0; j < promotions[0].barcodes.length; j++) {
-
-    if(cartItem.item.barcode === promotions[0].barcodes[j]) {
-      promotionText += '名称：' + cartItem.item.name +
-      '，数量：' + Math.floor(cartItem.count/3) + cartItem.item.unit + '\n';
-    }
-  }
-  return promotionText;
-}
+// function getPromotionText(cartItems) {
+//
+//   var promotions = loadPromotions();
+//   var promotionText = '';
+//
+//   for(var i = 0; i < cartItems.length; i++) {
+//     promotionText += findPromotion(cartItems[i], promotions);
+//
+//   }
+//   return promotionText;
+// }
+//
+// function findPromotion(cartItem, promotions) {
+//   var promotionText = '';
+//   for(var j = 0; j < promotions[0].barcodes.length; j++) {
+//
+//     if(cartItem.item.barcode === promotions[0].barcodes[j]) {
+//       promotionText += '名称：' + cartItem.item.name +
+//       '，数量：' + Math.floor(cartItem.count/3) + cartItem.item.unit + '\n';
+//     }
+//   }
+//   return promotionText;
+// }
 
 function getSummaryText(cartItems,total,promotions) {
 

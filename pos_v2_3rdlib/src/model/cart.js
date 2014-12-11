@@ -22,8 +22,33 @@ CartItem.prototype.setcartItems = function(tag) {
       cartItems.push({item:item , count:count});
     }
   }
-}
+};
 
 CartItem.prototype.getcartItems = function() {
   return this.cartItems;
+};
+
+
+CartItem.prototype.getPromotionText = function() {
+
+  var promotions = loadPromotions();
+  var promotionText = '';
+
+  for(var i = 0; i < this.cartItems.length; i++) {
+    promotionText += findPromotion(this.cartItems[i], promotions);
+
+  }
+  return promotionText;
+};
+
+function findPromotion(cartItem, promotions) {
+  var promotionText = '';
+  for(var j = 0; j < promotions[0].barcodes.length; j++) {
+
+    if(cartItem.item.barcode === promotions[0].barcodes[j]) {
+      promotionText += '名称：' + cartItem.item.name +
+      '，数量：' + Math.floor(cartItem.count/3) + cartItem.item.unit + '\n';
+    }
+  }
+  return promotionText;
 }
