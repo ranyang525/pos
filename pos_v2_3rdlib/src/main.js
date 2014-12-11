@@ -1,5 +1,5 @@
 function printInventory(tags) {
-  
+
   var scanner = new Scanner();
   var cart = new Cart();
 
@@ -7,6 +7,6 @@ function printInventory(tags) {
     cart.addCartItem(scanner.setscanner(tag));
   });
 
-  var inventory = new Inventory(cart);
-  console.log(inventory.toString());
+  var inventory = new Inventory();
+  console.log(inventory.toString(cart));
 }
