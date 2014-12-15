@@ -23,4 +23,5 @@ CartItem.findPromotioncount = function(promotion, cartItem, promotioncount) {
       promotioncount.push(Math.floor(cartItem.count/3));
     }
   }
+  return promotioncount;
 };
